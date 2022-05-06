@@ -121,12 +121,9 @@ router.post('/login/User',
   }
 )
 //http://localhost:8080/auth/login/Doctor  method "POST"
-router.post("/login/Doctor", async (req, res, next) => {
+router.post('/login/Doctor',
+  async (req, res, next) => {
   await authController.login(req, "Doctor", res, next);
-});
-// http://localhost:8080/auth/login/Admin  method "POST"
-// router.post("/login/Admin", async (req, res, next) => {
-//   await authController.login(req, "Admin", res, next);
-// });
-
+}
+);
 module.exports = router;

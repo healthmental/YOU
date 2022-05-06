@@ -16,7 +16,7 @@ const userSchema = new Schema({
   contactRelation: {type: String},
   medicalHistory: {type: String},
   sessions: {type:[String]},
-  permission: {type: String, enum:["User", "Admin", "Doctor"], default: "User"}
+  permission: {type: String, enum:["User", "Doctor"], default: "User"}
   },
   baseOptions
 );
