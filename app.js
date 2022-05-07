@@ -42,8 +42,9 @@ app.use((error, req, res, next) => {
     res.status(status).json({ message: message, data: data })
 })
 
+let mongoUrl =  "mongodb+srv://alaaeldin:projectteam8@cluster0.ydnex.mongodb.net/therapy-app?retryWrites=true&w=majority"
 mongoose.connect(
-    "mongodb+srv://alaaeldin:projectteam8@cluster0.ydnex.mongodb.net/therapy-app?retryWrites=true&w=majority"
+   mongoUrl
 ).then(result => {
     app.listen(PORT, console.log(`Server started on port${PORT}`));
 }).catch(err => console.log(err))

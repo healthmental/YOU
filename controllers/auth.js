@@ -149,16 +149,7 @@ exports.login = async (req, permission ,res, next) => {
         );
         res.status(200).header('token',token).json({
             message: "login successful",
-            status: true,
-            userId: loadedUser._id.toString(),
-            name: loadedUser.name.toString(),
-            mobilePhone: loadedUser.mobilePhone.toString(),
-            gender: loadedUser.gender.toString(),
-            birthDate: loadedUser.birthDate.toString(),
-            trustContact: loadedUser.trustContact.toString(),
-            contactRelation: loadedUser.contactRelation.toString(),
-            medicalHistory: loadedUser.medicalHistory.toString(),
-            sessions: loadedUser.sessions.toString()
+            token:token
         })
     } catch (error) {
         if (!error.statusCode) {
