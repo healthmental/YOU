@@ -4,6 +4,7 @@ const bcrypt = require('bcryptjs')
 const User = require('../models/user')
 const Doctor = require("../models/doctor")
 const cloud = require('../config/cloudinary')
+const { token } = require('morgan')
 
 exports.signupUser = async (req, permission, res, next) => {
     const firstName = req.body.firstName;
@@ -47,7 +48,7 @@ exports.signupUser = async (req, permission, res, next) => {
             image: image
         })
         const result = await user.save();
-        res.status(201).json({ message: 'User created!', userId: result._id  });
+        res.status(201).json({ message: 'User created!', userId: result._id, token: token  });
     } catch (err) {
         if (!err.statusCode) {
             err.statusCode = 500;
@@ -95,7 +96,7 @@ exports.signupDoctor = async (req, permission, res, next) => {
         image: image
         });
         const result = await user.save();
-        res.status(201).json({ message: 'Doctor created!', userId: result._id });
+        res.status(201).json({ message: 'Doctor created!', userId: result._id, token:token });
     } catch (err) {
         if (!err.statusCode) {
             err.statusCode = 500;

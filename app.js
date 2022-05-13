@@ -5,10 +5,10 @@ const mongoose = require("mongoose");
 // const morgan = require("morgan");
 
 const authRouter = require("./routes/auth");
+// const profileRouter = require("./routes/profile");
+const reviewRouter = require("./routes/reviewRoutes");
 const doctorReservation = require("./routes/doctorReservation");
 const userReservation = require("./routes/userReservation");
-// const profileRouter = require("./routes/profile");
-// const userReview = require("./routes/userReview")
 
 const app = express();
 
@@ -29,9 +29,10 @@ app.use((req, res, next) => {
 })
 
 app.use('/auth', authRouter)
+// app.use('/admin', profileRouter)
+app.use('/review', reviewRouter)
 app.use('/doctor', doctorReservation)
 app.use('/user', userReservation)
-// app.use('/admin', profileRouter)
 
 
 app.use((error, req, res, next) => {

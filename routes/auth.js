@@ -5,8 +5,8 @@ const authController = require('../controllers/auth');
 const multerConfig = require('../config/multer');
 const router = express.Router();
 
-// // http://localhost:8080/auth/signup/User  method "POST"
-// https://healthmental.herokuapp.com/auth/signup/User  [Api-endpoint]
+// http://localhost:8080/auth/signup/User  method "POST"
+// https://healthmental-you.herokuapp.com/auth/signup/User  [Api-endpoint]
 router.post(
   "/signup/User",
   multerConfig.single('profileImage'),
@@ -60,7 +60,7 @@ router.post(
 );
 
 // http://localhost:8080/auth/signup/Doctor  method "POST"
-// https://healthmental.herokuapp.com/auth/signup/Doctor  [API-endpoint]
+// https://healthmental-you.herokuapp.com/auth/signup/Doctor  [API-endpoint]
 router.post(
   "/signup/Doctor",
   multerConfig.single('profileImage'),
@@ -114,13 +114,14 @@ router.post(
   }
 );
 // http://localhost:8080/auth/login/User  method "POST"
-// https://healthmental.herokuapp.com/auth/login/User [API-endpoint]
+// https://healthmental-you.herokuapp.com/auth/login/User [API-endpoint]
 router.post('/login/User',
   async (req, res, next) => {
     await authController.login(req, "User", res, next)
   }
 )
-//http://localhost:8080/auth/login/Doctor  method "POST"
+// http://localhost:8080/auth/login/Doctor  method "POST"
+// https://healthmental-you.herokuapp.com/auth/login/Doctor [API-endpoint]
 router.post('/login/Doctor',
   async (req, res, next) => {
   await authController.login(req, "Doctor", res, next);
