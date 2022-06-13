@@ -1,14 +1,16 @@
-const path = require("path"); 
+const path = require("path");
 const express = require("express");
 const bodyParser = require("body-parser");
 const mongoose = require("mongoose");
-// const morgan = require("morgan");
+
+const user = require("./models/user");
+const doctor = require("./models/doctor");
+const image = require("./models/image");
+const review = require("./models/review");
 
 const authRouter = require("./routes/auth");
-// const profileRouter = require("./routes/profile");
+const profileRouter = require("./routes/profile");
 const reviewRouter = require("./routes/reviewRoutes");
-const doctorReservation = require("./routes/doctorReservation");
-const userReservation = require("./routes/userReservation");
 
 const app = express();
 
@@ -18,34 +20,33 @@ app.use(bodyParser.json());
 // app.use(morgan("dev"));
 
 // serve images in directory images
-app.use("/images", express.static(path.join(__dirname, 'images')));
+app.use("/images", express.static(path.join(__dirname, "images")));
 
 //CORS set
 app.use((req, res, next) => {
-    res.setHeader('Access-Control-Allow-Origin', '*');
-    res.setHeader('Access-Control-Allow-Methods', 'GET , POST , PUT , PATCH , DELETE');
-    res.setHeader('Access-Control-Allow-Headers', 'Content-Type , Authorization');
-    next()
-})
+  res.setHeader("Access-Control-Allow-Origin", "*");
+  res.setHeader("Access-Control-Allow-Methods", "GET , POST , PUT , PATCH , DELETE");
+  res.setHeader("Access-Control-Allow-Headers", "Content-Type , Authorization");
+  next();
+});
 
-app.use('/auth', authRouter)
-// app.use('/admin', profileRouter)
-app.use('/review', reviewRouter)
-app.use('/doctor', doctorReservation)
-app.use('/user', userReservation)
-
+app.use("/auth", authRouter);
+app.use(profileRouter);
+app.use(reviewRouter);
 
 app.use((error, req, res, next) => {
-    console.log(error);
-    const status = error.statusCode || 500;
-    const message = error.message;
-    const data = error.data;
-    res.status(status).json({ message: message, data: data })
-})
+  console.log(error);
+  const status = error.statusCode || 500;
+  const message = error.message;
+  const data = error.data;
+  res.status(status).json({ message: message, data: data });
+});
 
-let mongoUrl =  "mongodb+srv://alaaeldin:projectteam8@cluster0.ydnex.mongodb.net/therapy-app?retryWrites=true&w=majority"
-mongoose.connect(
-   mongoUrl
-).then(result => {
+let mongoUrl =
+  "mongodb+srv://alaaeldin:projectteam8@cluster0.ydnex.mongodb.net/therapy-app?retryWrites=true&w=majority";
+mongoose
+  .connect(mongoUrl)
+  .then((result) => {
     app.listen(PORT, console.log(`Server started on port${PORT}`));
-}).catch(err => console.log(err))
+  })
+  .catch((err) => console.log(err));

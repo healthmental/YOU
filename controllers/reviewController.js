@@ -1,45 +1,56 @@
-const Reviews = require('../models/review');
-const Doctor = require('../models/doctor');
+const Reviews = require("../models/review");
+const Doctor = require("../models/doctor");
 
-exports.addReview= async(req,res,next)=>
-{
-const doctorId = req.params.doctorId
-    const spesficDoc = await Doctor
-    .findById(doctorId)
-    .populate('reviews','user rating')
+exports.addReview = async (req, res, next) => {
+  try {
+    const doctorId = req.params.doctorId;
+    const userId = req.userId;
+    console.log(userId);
+    // Don't allow the doctor to post a review on himself.
+    if (userId === doctorId) {
+      const error = new Error("You can't review yourself :D");
+      error.statusCode = 400;
+      throw error;
+    }
 
-    const newReview = new Reviews({
-        rating:Math.round(req.body.rating),
-        comment:req.body.comment,
-        user:req.userId,
-        //time:moment(Date.now()).format('L')
-    })
-    try
-    {
-        // Don't allow the doctor to post a review on himself.
-        if(req.userId.toString() === spesficDoc._id.toString())
-        {
-            return res.status(401).json({
-                message:"Sorry, you can't rating"})
-        }
-        spesficDoc.reviews.push(newReview)
-        spesficDoc.numReviews = spesficDoc.reviews.length
-        for(var i=0;i<spesficDoc.reviews.length;i++)
-        {
-            spesficDoc.raiting = spesficDoc.reviews
-            .reduce((acc,item)=> acc + item.rating,0) /
-            spesficDoc.reviews.length
-        }
-        await spesficDoc.save()
-        await newReview.save()
-        res.status(201).json({ 
-            message: "Well, the rating has been added"})
-    }
-    catch(err){
-        if(!err.statuscode)
-        {
-            err.statuscode = 500
-        }
-        next(err)
-    }
-}
+    const review = new Reviews({
+      rating: req.body.rating,
+      comment: req.body.comment,
+      userId,
+      doctorId,
+      time: new Date().toISOString(), // 2020-01-01T00:00:00Z
+    });
+    const result = await review.save();
+    console.log(result);
+    return res.status(201).json({ message: "Review added successfully!" });
+  } catch (err) {
+    next(err);
+  }
+};
+
+exports.getReviews = async (req, res, next) => {
+  try {
+    const doctorId = req.params.doctorId;
+
+    const reviews = await Reviews.aggregate([
+      {
+        $match: {
+          $and: [{ doctorId }],
+        },
+      },
+      {
+        $lookup: {
+          from: "users",
+          localField: "userId",
+          foreignField: "_id",
+          as: "user",
+        },
+      },
+    ]);
+    // const reviews = await Reviews.find({ doctorId });
+
+    res.status(200).json({ reviews });
+  } catch (err) {
+    next(err);
+  }
+};
