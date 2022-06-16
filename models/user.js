@@ -17,6 +17,13 @@ const userSchema = new Schema(
     contactRelation: { type: String },
     medicalHistory: { type: String },
     sessions: { type: [String] },
+    languages: { type: [String] },
+    licIssuedDate: { type: String },
+    licExpiryDate: { type: String },
+    profession: { type: String },
+    role: { type: String },
+    code: { type: String },
+    emailVerified: { type: Boolean, default: false },
   },
   baseOptions
 );

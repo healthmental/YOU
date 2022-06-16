@@ -2,12 +2,14 @@ const path = require("path");
 const express = require("express");
 const bodyParser = require("body-parser");
 const mongoose = require("mongoose");
+require("dotenv").config();
 
 const user = require("./models/user");
-const doctor = require("./models/doctor");
 const image = require("./models/image");
 const review = require("./models/review");
 
+const verifyRouter = require("./routes/verify");
+const doctorRouter = require("./routes/doctor");
 const authRouter = require("./routes/auth");
 const profileRouter = require("./routes/profile");
 const reviewRouter = require("./routes/reviewRoutes");
@@ -32,6 +34,8 @@ app.use((req, res, next) => {
 
 app.use("/auth", authRouter);
 app.use(profileRouter);
+app.use(doctorRouter);
+app.use(verifyRouter);
 app.use(reviewRouter);
 
 app.use((error, req, res, next) => {
@@ -42,11 +46,22 @@ app.use((error, req, res, next) => {
   res.status(status).json({ message: message, data: data });
 });
 
-let mongoUrl =
-  "mongodb+srv://alaaeldin:projectteam8@cluster0.ydnex.mongodb.net/therapy-app?retryWrites=true&w=majority";
+// console.log(process.env);
+
+const mongoURL =
+  process.env.ENVIRONMENT === "local"
+    ? "mongodb://127.0.0.1:27017"
+    : `mongodb+srv://${process.env.MONGO_USERNAME}:${process.env.MONGO_PASSWORD}@cluster0.ydnex.mongodb.net/therapy-app?retryWrites=true&w=majority`;
+
+// mongoose.connection.db.dropDatabase(function (err, result) {
+//   if (err) console.log(err);
+//   else console.log("Dropped database successfully");
+// });
+
 mongoose
-  .connect(mongoUrl)
+  .connect(mongoURL)
   .then((result) => {
+    // mongoose.connection.db.dropDatabase();
     app.listen(PORT, console.log(`Server started on port${PORT}`));
   })
   .catch((err) => console.log(err));
