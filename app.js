@@ -9,10 +9,11 @@ const image = require("./models/image");
 const review = require("./models/review");
 
 const verifyRouter = require("./routes/verify");
+const articleRouter = require("./routes/article");
 const doctorRouter = require("./routes/doctor");
 const authRouter = require("./routes/auth");
 const profileRouter = require("./routes/profile");
-const reviewRouter = require("./routes/reviewRoutes");
+const reviewRouter = require("./routes/review");
 
 const app = express();
 
@@ -36,6 +37,7 @@ app.use("/auth", authRouter);
 app.use(profileRouter);
 app.use(doctorRouter);
 app.use(verifyRouter);
+app.use(articleRouter);
 app.use(reviewRouter);
 
 app.use((error, req, res, next) => {

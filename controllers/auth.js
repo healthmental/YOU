@@ -88,6 +88,7 @@ exports.signupDoctor = async (req, res, next) => {
     }
 
     const hashedPW = await bcrypt.hash(password, 12);
+    const verificationCode = generateCode();
     const user = new User({
       name: name,
       mobilePhone: mobilePhone,
@@ -101,6 +102,7 @@ exports.signupDoctor = async (req, res, next) => {
       licExpiryDate: licExpiryDate,
       image: imageURL,
       role: "doctor",
+      code: verificationCode,
     });
 
     const result = await user.save();
