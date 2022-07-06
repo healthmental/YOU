@@ -21,6 +21,7 @@ const userSchema = new Schema(
     licIssuedDate: { type: String },
     licExpiryDate: { type: String },
     profession: { type: String },
+    sessionPrice: { type: String, default: "400" },
     role: { type: String },
     code: { type: String },
     emailVerified: { type: Boolean, default: false },

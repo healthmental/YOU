@@ -74,6 +74,7 @@ exports.signupDoctor = async (req, res, next) => {
   const languages = req.body.languages;
   const licIssuedDate = req.body.licIssuedDate;
   const licExpiryDate = req.body.licExpiryDate;
+  //const sessionPrice = req.body.sessionPrice;
   const imageURL = req.file.path;
 
   try {
@@ -101,6 +102,7 @@ exports.signupDoctor = async (req, res, next) => {
       licIssuedDate: licIssuedDate,
       licExpiryDate: licExpiryDate,
       image: imageURL,
+      //sessionPrice: sessionPrice,
       role: "doctor",
       code: verificationCode,
     });
@@ -140,24 +142,3 @@ exports.login = async (req, res, next) => {
     next(error);
   }
 };
-
-/*
-exports.forgetPassword = async (req ,res, next) => {
-    const user = await User.findOne({ email: req.body.email });
-    if(!user) {
-        return next(
-            new ApiError(`There is no user with that email ${req.body.email}`, 404)
-            );
-    }
-    const resetCode = Math.floor(100000 + Math.random() * 900000).toString();
-    const hashedResetCode = crypto
-        .createHash('sha256')
-        .update(resetCode)
-        .digest('hex');
-
-    //console.log(resetCode);
-    //console.log(hashedResetCode);
-
-    
-};
-    */

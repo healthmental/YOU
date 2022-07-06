@@ -62,11 +62,4 @@ router.post(
 
 router.post("/login", authController.login);
 
-/*
-router.post('/forgotpassword/User',
-async (req, res, next) => {
-  await authController.forgotPassword(req, "Doctor", res, next);
-}
-);
-*/
 module.exports = router;
