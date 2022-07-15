@@ -1,20 +1,54 @@
-/*const Reservation = require("../models/reservation");
+const Reservation = require("../models/reservation");
+const User = require("../models/user");
 
 exports.addReservation = async (req, res, next) => {
-  const { doctorId, startDate, endDate, roomName } = req.body;
   try {
-    // const days = ["sunday", "monday", "tuesday", "wednesday", "thursday", "friday", "saturday"];
-    // const d = new Date(date);
-    // const dayName = days[d.getDay()];
-    // const workingDays = await User.findById(doctorId, { workingDays: 1 }); // ["saturday"]
+    const doctor = await User.findById(req.body.doctor);
+    const createAppointment = new Reservation({
+      doctor: req.body.doctor,
+      startDate: req.body.start,
+      userId: req.userId,
+      date: req.body.date,
+      roomName: req.body.roomName,
+    });
+    const foundApppoitment = await Reservation.findOne({
+      doctor: req.body.doctor,
+      startDate: req.body.start,
+      date: req.body.date,
+    });
+    if (foundApppoitment) {
+      return res.status(200).json({ message: "you cant reservation twice" });
+    }
 
-    const reservation = new Reservation({ doctorId, startDate, endDate, roomName });
-    const result = await reservation.save();
-    console.log(result);
-
-    return res.status(200).json({ message: "Success" });
+    await createAppointment.save();
+    return res.status(201).json({
+      message: "Your Reservation succeeded",
+      id: createAppointment._id,
+    });
   } catch (err) {
     next(err);
   }
 };
-*/
+exports.getAllReservations = async (req, res, next) => {
+  try {
+    const allReservations = await Reservation.find({ userId: req.userId })
+      .select("reservationStatus meetingName meetingId")
+      .populate({
+        path: "doctor",
+        select: "name",
+      })
+      .populate({
+        path: "userId",
+        select: "name",
+      });
+    if (allReservations.length == 0) {
+      return res.json({ message: "No appointments" });
+    }
+    return res.json({ totalReservations: allReservations.length, allReservations });
+  } catch (error) {
+    if (!error.statuscode) {
+      error.statuscode = 500;
+    }
+    next(error);
+  }
+};

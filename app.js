@@ -14,6 +14,8 @@ const doctorRouter = require("./routes/doctor");
 const authRouter = require("./routes/auth");
 const profileRouter = require("./routes/profile");
 const reviewRouter = require("./routes/review");
+const calenderRouter = require("./routes/calender");
+const reservationRouter = require("./routes/reservation");
 
 const app = express();
 
@@ -39,6 +41,8 @@ app.use(doctorRouter);
 app.use(verifyRouter);
 app.use(articleRouter);
 app.use(reviewRouter);
+app.use(calenderRouter);
+app.use(reservationRouter);
 
 app.use((error, req, res, next) => {
   console.log(error);

@@ -1,15 +1,10 @@
 const User = require("../models/user");
-//const Reservation = require("../models/reservation");
 
 exports.getProfile = async (req, res, next) => {
   try {
     const id = req.params.id;
     const user = await User.findById(id, { password: 0 });
     const date = new Date().toISOString();
-    /*if (user.role === "doctor") {
-      const reservations = await Reservation.find({ doctorId: id });
-      reservationFound = reservatios.find((reservation) => reservation.startDate);
-    } */
 
     console.log(user);
     if (!user) {
@@ -22,3 +17,20 @@ exports.getProfile = async (req, res, next) => {
     next(err);
   }
 };
+
+/*
+exports.updateProfile = async (req, res, next) => {
+    const userId = req.userId
+    const { name, email , Mobilephone } = req.body
+  
+    try {
+      const user = { name, email, Mobilephone }
+      await User.update(userId, user)
+      logger.info(`User ${userId} updated successfully`)
+  
+      return res.status(200).json({ message: "User updated successfully" })
+    } catch (error) {
+      next(error)
+    }
+  }
+  */

@@ -1,4 +1,3 @@
-/*
 const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 const baseOptions = {
@@ -7,13 +6,12 @@ const baseOptions = {
 const reservations = new Schema(
   {
     userId: { type: mongoose.Schema.ObjectId, ref: "User" },
-    doctor: { type: mongoose.Schema.Mixed },
-    startDate: { type: Date },
-    endDate: { type: Date },
+    doctor: { type: mongoose.Schema.ObjectId, ref: "User" },
+    startDate: { type: String },
+    date: { type: String },
     roomName: { type: String },
   },
   baseOptions
 );
 
 module.exports = mongoose.model("Reservation", reservations);
-*/

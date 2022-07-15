@@ -74,7 +74,7 @@ exports.signupDoctor = async (req, res, next) => {
   const languages = req.body.languages;
   const licIssuedDate = req.body.licIssuedDate;
   const licExpiryDate = req.body.licExpiryDate;
-  //const sessionPrice = req.body.sessionPrice;
+  const sessionPrice = req.body.sessionPrice;
   const imageURL = req.file.path;
 
   try {
@@ -102,7 +102,7 @@ exports.signupDoctor = async (req, res, next) => {
       licIssuedDate: licIssuedDate,
       licExpiryDate: licExpiryDate,
       image: imageURL,
-      //sessionPrice: sessionPrice,
+      sessionPrice: sessionPrice,
       role: "doctor",
       code: verificationCode,
     });
