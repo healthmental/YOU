@@ -25,7 +25,9 @@ const userSchema = new Schema(
     role: { type: String },
     code: { type: String },
     emailVerified: { type: Boolean, default: false },
+    calender: [{ type: mongoose.Schema.ObjectId, ref: "Calender" }],
   },
   baseOptions
 );
+
 module.exports = mongoose.model("User", userSchema);

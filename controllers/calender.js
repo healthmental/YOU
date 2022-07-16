@@ -25,16 +25,23 @@ exports.create = async (req, res, next) => {
 
 exports.getAllReservations = async (req, res, next) => {
   try {
-    const allReservations = await reservation
-      .find({ doctor: req.doctor })
-      .populate({
-        path: "doctor",
-        select: "name",
-      })
-      .populate({
-        path: "userId",
-        select: "name",
-      });
+    const allReservations = await calender.find({}).populate({
+      path: "doctor",
+      select: [
+        "name",
+        "image",
+        "email",
+        "mobilePhone",
+        "gender",
+        "birthDate",
+        "profession",
+        "languages",
+        "sessionPrice",
+        "licIssuedDate",
+        "licExpiryDate",
+      ],
+    });
+
     if (allReservations.length == 0) {
       return res.json({ message: "No appointments" });
     }
@@ -46,6 +53,7 @@ exports.getAllReservations = async (req, res, next) => {
     next(error);
   }
 };
+
 /*
 exports.getWorkingHours = async (req, res, next) => {
   var id = req.params.id;

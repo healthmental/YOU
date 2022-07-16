@@ -18,6 +18,22 @@ exports.getProfile = async (req, res, next) => {
   }
 };
 
+exports.spesficDoc = async (req, res, next) => {
+  try {
+    const spesficDoc = await User.findById(req.params.id)
+      .select("image name calender")
+      .populate("calender", "weekday startAt endAt duration date");
+    if (!spesficDoc) {
+      return res.status(404).json({
+        message: "This doctor does not exist",
+      });
+    }
+    return res.status(200).json(spesficDoc);
+  } catch (err) {
+    next(err);
+  }
+};
+
 /*
 exports.updateProfile = async (req, res, next) => {
     const userId = req.userId

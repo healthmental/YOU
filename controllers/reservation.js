@@ -35,11 +35,33 @@ exports.getAllReservations = async (req, res, next) => {
       .select("reservationStatus meetingName meetingId")
       .populate({
         path: "doctor",
-        select: "name",
+        select: [
+          "name",
+          "image",
+          "email",
+          "mobilePhone",
+          "gender",
+          "birthDate",
+          "profession",
+          "languages",
+          "sessionPrice",
+          "licIssuedDate",
+          "licExpiryDate",
+        ],
       })
       .populate({
         path: "userId",
-        select: "name",
+        select: [
+          "name",
+          "image",
+          "email",
+          "mobilePhone",
+          "gender",
+          "birthDate",
+          "trustContact",
+          "contactRelation",
+          "sessions",
+        ],
       });
     if (allReservations.length == 0) {
       return res.json({ message: "No appointments" });
