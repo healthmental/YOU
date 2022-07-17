@@ -33,20 +33,21 @@ exports.spesficDoc = async (req, res, next) => {
     next(err);
   }
 };
-
 /*
 exports.updateProfile = async (req, res, next) => {
-    const userId = req.userId
-    const { name, email , Mobilephone } = req.body
-  
-    try {
-      const user = { name, email, Mobilephone }
-      await User.update(userId, user)
-      logger.info(`User ${userId} updated successfully`)
-  
-      return res.status(200).json({ message: "User updated successfully" })
-    } catch (error) {
-      next(error)
-    }
+  const userId = req.userId;
+
+  try {
+    await User.findByIdAndUpdated(
+      userId,
+      { name: req.body.name },
+      { email: req.body.email },
+      { mobilePhone: req.body.mobilePhone }
+    );
+
+    return res.status(200).json({ message: "User updated successfully" });
+  } catch (error) {
+    next(error);
   }
-  */
+};
+*/

@@ -7,8 +7,8 @@ exports.create = async (req, res, next) => {
   try {
     const hoursworking = new calender({
       weekday: req.body.weekday,
-      startAt: moment(req.body.startAt, "h:mm a").format("h:mm a"),
-      endAt: moment(req.body.endAt, "h:mm a").format("h:mm a"),
+      startAt: moment(req.body.startAt, "h:mm a").format(""),
+      endAt: moment(req.body.endAt, "h:mm a").format(""),
       doctor: req.userId,
       date: moment(req.body.date).format("YYYY-MM-DD"),
     });

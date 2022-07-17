@@ -6,14 +6,14 @@ exports.addReservation = async (req, res, next) => {
     const doctor = await User.findById(req.body.doctor);
     const createAppointment = new Reservation({
       doctor: req.body.doctor,
-      startDate: req.body.start,
+      startDate: req.body.startAt,
       userId: req.userId,
       date: req.body.date,
       roomName: req.body.roomName,
     });
     const foundApppoitment = await Reservation.findOne({
       doctor: req.body.doctor,
-      startDate: req.body.start,
+      startDate: req.body.startAt,
       date: req.body.date,
     });
     if (foundApppoitment) {

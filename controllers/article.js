@@ -9,7 +9,7 @@ exports.create = async (req, res, next) => {
     const category = req.body.category;
     const cover = req.file.path;
     const doctorId = req.userId;
-    const doctor = await User.findById(doctorId, { name: 1, image: 1 });
+    const doctor = await User.findById(doctorId, { name: 1, profession: 1 });
 
     const article = new Article({
       title,
