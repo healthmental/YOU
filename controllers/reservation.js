@@ -1,20 +1,19 @@
 const Reservation = require("../models/reservation");
 const User = require("../models/user");
-const moment = require("moment");
 
 exports.addReservation = async (req, res, next) => {
   try {
     const doctor = await User.findById(req.body.doctor);
     const createAppointment = new Reservation({
       doctor: req.body.doctor,
-      startDate: moment(req.body.startAt, "h:mm a").format("h:mm a"),
+      startDate: req.body.startDate,
       userId: req.userId,
-      date: moment(req.body.date, "h:mm a").format("h:mm a"),
+      date: req.body.date,
       roomName: req.body.roomName,
     });
     const foundApppoitment = await Reservation.findOne({
       doctor: req.body.doctor,
-      startDate: req.body.startAt,
+      startDate: req.body.startDate,
       date: req.body.date,
     });
     if (foundApppoitment) {
