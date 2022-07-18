@@ -33,6 +33,20 @@ exports.spesficDoc = async (req, res, next) => {
     next(err);
   }
 };
+/*exports.updateProfile = async (req, res, next) => {
+  const id = req.params.id;
+
+  let request = {
+    name: req.body.name,
+    email: req.body.email,
+    mobilePhone: req.body.mobilePhone,
+  };
+  res.status(200).json({
+    id: id,
+    profile: request,
+  });
+};
+*/
 /*
 exports.updateProfile = async (req, res, next) => {
   const userId = req.userId;
