@@ -54,10 +54,10 @@ exports.updateProfile = async (req, res, next) => {
   const userId = req.userId;
 
   try {
-    const update = await User.findById(userId);
-    console.log(update);
+    const update = await User.findByIdAndUpdate(userId, { ...req.body });
     //update.email = req.body.email;
-    update.save();
+    //update.name = req.body.name;
+    //update.save();
     return res.status(200).json({ message: "User updated successfully" });
   } catch (error) {
     next(error);
