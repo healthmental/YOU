@@ -33,7 +33,7 @@ exports.addReservation = async (req, res, next) => {
 exports.getAllReservations = async (req, res, next) => {
   try {
     const allReservations = await Reservation.find({ userId: req.userId })
-      .select("reservationStatus meetingName meetingId")
+      .select("startDate date roomName")
       .populate({
         path: "doctor",
         select: [
