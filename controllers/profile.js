@@ -1,4 +1,5 @@
 const User = require("../models/user");
+const moment = require("moment");
 
 exports.getProfile = async (req, res, next) => {
   try {
@@ -22,7 +23,8 @@ exports.spesficDoc = async (req, res, next) => {
   try {
     const spesficDoc = await User.findById(req.params.id)
       .select("image name calender")
-      .populate("calender", "weekday startAt endAt duration date");
+      .populate("calender", "weekday startAt endAt duration date")
+      .select(moment().format("startAt endAt"));
     if (!spesficDoc) {
       return res.status(404).json({
         message: "This doctor does not exist",
@@ -47,21 +49,17 @@ exports.spesficDoc = async (req, res, next) => {
   });
 };
 */
-/*
+
 exports.updateProfile = async (req, res, next) => {
   const userId = req.userId;
 
   try {
-    await User.findByIdAndUpdated(
-      userId,
-      { name: req.body.name },
-      { email: req.body.email },
-      { mobilePhone: req.body.mobilePhone }
-    );
-
+    const update = await User.findById(userId);
+    console.log(update);
+    //update.email = req.body.email;
+    update.save();
     return res.status(200).json({ message: "User updated successfully" });
   } catch (error) {
     next(error);
   }
 };
-*/
