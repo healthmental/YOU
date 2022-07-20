@@ -5,6 +5,7 @@ const baseOptions = {
 };
 const reports = new Schema(
   {
+    userId: { type: mongoose.Schema.ObjectId, ref: "User" },
     doctor: { type: Schema.Types.Mixed },
     condition: { type: String },
     plan: { type: String },

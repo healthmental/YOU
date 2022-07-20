@@ -35,20 +35,6 @@ exports.spesficDoc = async (req, res, next) => {
     next(err);
   }
 };
-/*exports.updateProfile = async (req, res, next) => {
-  const id = req.params.id;
-
-  let request = {
-    name: req.body.name,
-    email: req.body.email,
-    mobilePhone: req.body.mobilePhone,
-  };
-  res.status(200).json({
-    id: id,
-    profile: request,
-  });
-};
-*/
 
 exports.updateProfile = async (req, res, next) => {
   const userId = req.userId;
@@ -58,7 +44,7 @@ exports.updateProfile = async (req, res, next) => {
     //update.email = req.body.email;
     //update.name = req.body.name;
     //update.save();
-    return res.status(200).json({ message: "User updated successfully" });
+    return res.status(200).json({ message: "Profile updated successfully" });
   } catch (error) {
     next(error);
   }

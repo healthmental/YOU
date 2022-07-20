@@ -7,6 +7,6 @@ const { updateProfile } = require("../controllers/profile");
 
 router.get("/profile/:id", getProfile);
 router.get("/doctor/:id", Doctor.spesficDoc);
-router.post("/profile/:id", isAuth, updateProfile);
+router.put("/profile/:id", isAuth, updateProfile);
 
 module.exports = router;
