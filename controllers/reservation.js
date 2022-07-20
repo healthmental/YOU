@@ -21,6 +21,10 @@ exports.addReservation = async (req, res, next) => {
     }
 
     await createAppointment.save();
+    const userappointment = await User.findByIdAndUpdate(
+      { _id: req.userId },
+      { $push: { calender: createAppointment } }
+    );
     return res.status(201).json({
       message: "Your Reservation succeeded",
       id: createAppointment._id,

@@ -10,6 +10,7 @@ const reservations = new Schema(
     startDate: { type: String },
     date: { type: String },
     roomName: { type: String },
+    calender: { type: mongoose.Schema.ObjectId, ref: "Calender" },
   },
   baseOptions
 );
